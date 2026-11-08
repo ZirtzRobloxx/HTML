@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Zirtz.xyz. The premier keyless Roblox script hub. Peak performance, 100% keyless, multi-game.">
+  <title>Login & Zirtz.xyz Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <style>
+    /* Styling Global & Halaman Login */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    
+    #login-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80') no-repeat;
+      background-size: cover;
+      background-position: center;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+    }
+
+    .wrapper {
+      width: 420px;
+      background: rgba(10, 10, 11, 0.75);
+      border: 2px solid rgba(255, 255, 255, .2);
+      backdrop-filter: blur(12px);
+      color: #fff;
+      border-radius: 16px;
+      padding: 30px 40px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+
+    .wrapper h1 {
+      font-size: 36px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .error-msg {
+      color: #ff5c5c;
+      font-size: 13px;
+      text-align: center;
+      margin-bottom: 15px;
+      display: none;
+    }
+
+    .wrapper .input-box {
+      position: relative;
+      width: 100%;
+      height: 50px;
+      margin: 25px 0;
+    }
+
+    .input-box input {
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      border: 2px solid rgba(255, 255, 255, .2);
+      border-radius: 40px;
+      font-size: 16px;
+      color: #fff;
+      padding: 20px 45px 20px 20px;
+    }
+
+    .input-box input::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .input-box i {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 20px;
+    }
+
+    .wrapper .remember-forgot {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14.5px;
+      margin: -10px 0 20px;
+      color: #ccc;
+    }
+
+    .remember-forgot label input {
+      accent-color: #fff;
+      margin-right: 5px;
+    }
+
+    .remember-forgot a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .remember-forgot a:hover {
+      text-decoration: underline;
+    }
+
+    .wrapper .btn-login {
+      width: 100%;
+      height: 45px;
+      background: #fff;
+      border: none;
+      outline: none;
+      border-radius: 40px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+      cursor: pointer;
+      font-size: 16px;
+      color: #333;
+      font-weight: 600;
+      transition: opacity 0.2s;
+    }
+
+    .wrapper .btn-login:hover {
+      opacity: 0.9;
+    }
+
+    .wrapper .register-link {
+      font-size: 14.5px;
+      text-align: center;
+      margin: 20px 0 5px;
+      color: #ccc;
+    }
+
+    .register-link p a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .register-link p a:hover {
+      text-decoration: underline;
+    }
+
+    /* Styling Zirtz.xyz Dashboard (Hidden Sbelum Login Berhasil) */
+    #dashboard-section {
+      display: none;
+    }
+
+    :root{
+      --bg:#0a0a0b; --surface:#111113; --border:#232327; --border2:#1a1a1d;
+      --fg:#fafafa; --muted:#9b9ba3; --dim:#636369; --chrome:#ffffff;
+      --radius:14px; --maxw:1140px; color-scheme:dark;
+    }
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--fg);-webkit-font-smoothing:antialiased;line-height:1.5;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    svg{display:block}
+    .wrap{max-width:var(--maxw);margin:0 auto;padding-left:max(22px,env(safe-area-inset-left));padding-right:max(22px,env(safe-area-inset-right))}
+    
+    nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(16px);background:rgba(10,10,11,0.7);border-bottom:1px solid var(--border2)}
+    .nav-in{display:flex;align-items:center;justify-content:space-between;height:66px}
+    .brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:-0.02em;font-size:16px}
+    .brand .mark{width:30px;height:30px;border-radius:8px;object-fit:cover;background:#000;display:block}
+    .nav-links{display:flex;gap:32px;align-items:center}
+    .nav-links a{font-size:14px;color:var(--muted);font-weight:500;transition:color .15s}
+    .nav-links a:hover{color:var(--fg)}
+    .nav-cta{display:flex;gap:10px;align-items:center}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:600;font-size:14px;
+      border-radius:11px;padding:10px 18px;cursor:pointer;border:1px solid transparent;
+      transition:transform .12s,background .15s,border-color .15s,opacity .15s;white-space:nowrap}
+    .btn-primary{background:var(--chrome);color:#0a0a0b;border-color:#fff}
+    .btn-ghost{background:#141417;color:var(--fg);border-color:var(--border)}
+    .btn-lg{padding:13px 24px;font-size:15px;border-radius:12px}
+
+    .hero{padding:80px 0 30px;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+    .pill{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;color:var(--muted);
+      background:#111113;border:1px solid var(--border);border-radius:999px;padding:6px 13px;margin-bottom:26px}
+    .pill .dot{width:7px;height:7px;border-radius:50%;background:#4ade80;box-shadow:0 0 9px #4ade80}
+    .hero h1{font-size:clamp(38px,5.4vw,62px);font-weight:900;letter-spacing:-0.045em;line-height:1.02;
+      background:linear-gradient(180deg,#fff 45%,#8f8f97);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .hero .lead{margin-top:20px;font-size:17px;color:var(--muted);line-height:1.6;max-width:480px}
+    .hero-cta{display:flex;gap:11px;margin-top:30px;flex-wrap:wrap}
+    .loader{margin-top:26px;background:#0d0d10;border:1px solid var(--border);border-radius:12px;
+      padding:5px 5px 5px 16px;display:flex;align-items:center;gap:10px;max-width:490px}
+    .loader code{font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:12.5px;color:#c9c9cf;
+      overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0}
+    .loader .cp{background:#1d1d21;color:#fff;border:1px solid var(--border);border-radius:8px;padding:9px 14px;
+      font-weight:600;font-size:12.5px;cursor:pointer;flex-shrink:0}
+
+    .mock{background:#0e0e11;border:1px solid var(--border);border-radius:16px;overflow:hidden;
+      box-shadow:0 40px 80px -30px rgba(0,0,0,0.8)}
+    .mock-bar{display:flex;align-items:center;gap:7px;padding:12px 15px;border-bottom:1px solid var(--border2);background:#121215}
+    .mock-bar .d{width:10px;height:10px;border-radius:50%;background:#2a2a30}
+    .mock-bar .t{margin-left:8px;font-size:12px;font-weight:600;color:var(--muted)}
+    .mock-bar .ver{margin-left:auto;font-size:10px;font-weight:700;color:#0a0a0b;background:linear-gradient(145deg,#fff,#c5c5cc);padding:2px 7px;border-radius:5px}
+    .mock-body{display:grid;grid-template-columns:132px 1fr;min-height:296px}
+    .mock-side{border-right:1px solid var(--border2);padding:12px 10px;display:flex;flex-direction:column;gap:3px;background:#0c0c0f}
+    .mtab{display:flex;align-items:center;gap:9px;font-size:12.5px;font-weight:500;color:var(--dim);padding:8px 9px;border-radius:8px}
+    .mtab.on{background:#18181c;color:var(--fg)}
+    .mock-main{padding:18px}
+    .mrow{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border2)}
+    .mrow .lbl{font-size:13px;font-weight:500}
+    .mrow .lbl small{display:block;color:var(--dim);font-size:11px;font-weight:400;margin-top:2px}
+    .tog{width:38px;height:22px;border-radius:999px;background:#26262b;position:relative}
+    .tog.on{background:#fff}
+    .tog::after{content:"";position:absolute;top:3px;width:16px;height:16px;border-radius:50%;background:#0a0a0b;left:3px;transition:left .2s}
+    .tog.on::after{left:19px}
+    .vipt{font-size:9.5px;font-weight:800;color:#0a0a0b;background:linear-gradient(145deg,#fff,#c5c5cc);padding:2px 6px;border-radius:4px}
+    .mstat{display:flex;align-items:center;gap:8px;margin-top:14px;font-size:11.5px;color:var(--muted)}
+    .mstat .lv{width:6px;height:6px;border-radius:50%;background:#4ade80}
+
+    .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border2);
+      border:1px solid var(--border2);border-radius:16px;overflow:hidden;margin:64px 0 0}
+    .metric{background:var(--bg);padding:24px 18px;text-align:center}
+    .metric .n{font-size:27px;font-weight:800}
+    .metric .l{font-size:12.5px;color:var(--dim);margin-top:4px}
+
+    section{padding:76px 0}
+    .sec-head{text-align:center;max-width:600px;margin:0 auto 44px}
+    .sec-head .eyebrow{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+    .sec-head h2{font-size:clamp(27px,4vw,38px);font-weight:800;margin-top:12px}
+    .sec-head p{color:var(--muted);margin-top:13px;font-size:15px}
+
+    .feat{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+    .card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius);padding:24px}
+    .card h3{font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px}
+    .card .vip{font-size:9.5px;font-weight:800;color:#0a0a0b;background:linear-gradient(145deg,#fff,#c5c5cc);padding:2px 6px;border-radius:4px}
+    .card p{color:var(--muted);font-size:13.5px;margin-top:9px}
+
+    .games{display:flex;gap:11px;flex-wrap:wrap;justify-content:center}
+    .game{background:var(--surface);border:1px solid var(--border2);border-radius:11px;padding:13px 19px;font-weight:600;font-size:14px;display:flex;align-items:center;gap:9px}
+    .game .live{width:7px;height:7px;border-radius:50%;background:#4ade80}
+
+    .price{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+    .plan{background:var(--surface);border:1px solid var(--border2);border-radius:18px;padding:28px;display:flex;flex-direction:column}
+    .plan.pop{border-color:#3a3a44;background:linear-gradient(180deg,#161619,#0f0f12);position:relative}
+    .plan .pname{font-size:13.5px;font-weight:700;color:var(--muted)}
+    .plan .pprice{font-size:32px;font-weight:900;margin:13px 0 2px}
+    .plan ul{list-style:none;margin:20px 0 24px;display:flex;flex-direction:column;gap:10px}
+    .plan li{font-size:13.5px;color:var(--muted);display:flex;gap:9px}
+
+    .band{background:linear-gradient(180deg,#141417,#0d0d10);border:1px solid var(--border2);border-radius:22px;padding:54px 32px;text-align:center}
+    .band h2{font-size:clamp(26px,4vw,36px);font-weight:900}
+    .band p{color:var(--muted);margin:13px auto 26px;max-width:440px}
+
+    footer{border-top:1px solid var(--border2);padding:38px 0;margin-top:44px}
+    .foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+    .foot .links{display:flex;gap:22px}
+    .foot a{font-size:13.5px;color:var(--muted)}
+    .foot .cr{font-size:13px;color:var(--dim)}
+
+    @media(max-width:900px){
+      .hero{grid-template-columns:1fr;gap:40px;padding:60px 0 20px}
+      .feat,.price{grid-template-columns:1fr}
+      .metrics{grid-template-columns:1fr}
+      .nav-links{display:none}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BAGIAN HALAMAN LOGIN -->
+  <div id="login-section">
+    <div class="wrapper">
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <h1>Login</h1>
+        <div id="errorMsg" class="error-msg">Username atau Password salah!</div>
+        <div class="input-box">
+          <input type="text" id="usernameInput" placeholder="Username" value="ALDIGANTENG" required>
+          <i class='bx bxs-user'></i>
+        </div>
+        <div class="input-box">
+          <input type="password" id="passwordInput" placeholder="Password" value="GGZIRTZ" required>
+          <i class='bx bxs-lock-alt'></i>
+        </div>
+        <div class="remember-forgot">
+          <label><input type="checkbox">Remember Me</label>
+          <a href="#">Forgot Password</a>
+        </div>
+        <button type="submit" class="btn-login">Login</button>
+        <div class="register-link">
+          <p>Don't have an account? <a href="#">Register</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- BAGIAN HALAMAN DASHBOARD ZIRTZ.XYZ -->
+  <div id="dashboard-section" class="page">
+    <nav><div class="wrap nav-in">
+      <a href="#" class="brand"><span class="mark" style="background:#fff;display:inline-block;width:20px;height:20px;border-radius:4px;"></span> Zirtz.xyz</a>
+      <div class="nav-links">
+        <a href="#features">Features</a><a href="#games">Games</a><a href="#pricing">Pricing</a>
+        <a href="https://dsc.gg/zirtz" target="_blank" rel="noopener">Discord</a>
+      </div>
+      <div class="nav-cta">
+        <button onclick="handleLogout()" class="btn btn-ghost">Logout</button>
+        <a href="#get" class="btn btn-primary">Get Key</a>
+      </div>
+    </div></nav>
+
+    <header class="hero wrap">
+      <div>
+        <div class="pill"><span class="dot"></span> 100% Keyless · Multi-Game</div>
+        <h1>Dominate every Roblox game.</h1>
+        <p class="lead">The premier keyless script hub. Peak-performance automation that just works, free by default. Go VIP for turbo speed and teleport strike.</p>
+        <div class="hero-cta">
+          <a href="#get" class="btn btn-primary btn-lg">Get Started</a>
+          <a href="#pricing" class="btn btn-ghost btn-lg">See Pricing</a>
+        </div>
+        <div class="loader">
+          <code id="loaderCode">loadstring(game:HttpGet("https://zirtz.xyz/loader"))()</code>
+          <button class="cp" onclick="copyLoader(this)">Copy</button>
+        </div>
+      </div>
+
+      <div class="mock" aria-hidden="true">
+        <div class="mock-bar"><span class="d"></span><span class="d"></span><span class="d"></span><span class="t">Zirtz.xyz</span><span class="ver">V7</span></div>
+        <div class="mock-body">
+          <div class="mock-side">
+            <div class="mtab on">Auto Steal</div>
+            <div class="mtab">Egg Finder</div>
+            <div class="mtab">Movement</div>
+            <div class="mtab">Visual</div>
+            <div class="mtab">Settings</div>
+          </div>
+          <div class="mock-main">
+            <div class="mrow"><div class="lbl">Auto Steal Egg<small>Divine · Eternal priority</small></div><div class="tog on"></div></div>
+            <div class="mrow"><div class="lbl">Safezone Return<small>Perimeter trajectory</small></div><div class="tog on"></div></div>
+            <div class="mrow"><div class="lbl">Carrier Teleport <span class="vipt">VIP</span><small>Frame-perfect strike</small></div><div class="tog"></div></div>
+            <div class="mrow"><div class="lbl">Turbo Speed <span class="vipt">VIP</span><small>500 spd</small></div><div class="tog"></div></div>
+            <div class="mstat"><span class="lv"></span> Running · 1,702 eggs caught · 0 flags</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="wrap">
+      <div class="metrics">
+        <div class="metric"><div class="n">100%</div><div class="l">Keyless for Free Users</div></div>
+        <div class="metric"><div class="n">2</div><div class="l">Supported Games</div></div>
+        <div class="metric"><div class="n">24/7</div><div class="l">Active & Updated</div></div>
+      </div>
+    </div>
+
+    <section id="features" class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Modules</div>
+        <h2>Hard games, made effortless</h2>
+        <p>Optimized modules that run smooth, stay safe, and keep farming while you're away.</p>
+      </div>
+      <div class="feat">
+        <div class="card"><h3>Auto Egg Gathering</h3><p>Sweeps priority nests and gathers loot smoothly, then returns via the safezone to avoid player knockouts.</p></div>
+        <div class="card"><h3>Treadmill State-Lock</h3><p>Finds the nearest machine and trains automatically. Tween locks once seated to stop rubber-banding and dismount loops.</p></div>
+        <div class="card"><h3>Carrier Teleport <span class="vip">VIP</span></h3><p>Instant zero-latency teleport directly onto rival egg-carrier hitboxes. Frame-perfect strike to seize their loot.</p></div>
+      </div>
+    </section>
+
+    <section id="games" class="wrap">
+      <div class="sec-head"><div class="eyebrow">Supported</div><h2>Universal multi-game support</h2></div>
+      <div class="games">
+        <div class="game"><span class="live"></span> Steal An Egg</div>
+        <div class="game"><span class="live"></span> Break Steal An Egg</div>
+      </div>
+    </section>
+
+    <section id="pricing" class="wrap">
+      <div class="sec-head"><div class="eyebrow">Pricing</div><h2>Choose your play style</h2></div>
+      <div class="price">
+        <div class="plan"><div class="pname">Free Access</div><div class="pprice">Rp 0</div>
+          <ul><li>Full keyless hub</li><li>Auto gathering + safezone</li></ul>
+          <a href="#get" class="btn btn-ghost" style="margin-top:auto;">Start Free</a></div>
+        <div class="plan pop"><div class="pname">Monthly VIP Pass</div><div class="pprice">Rp 35.000</div>
+          <ul><li>Everything in Free</li><li>Turbo 500 speed</li><li>Carrier teleport strike</li></ul>
+          <a href="#get" class="btn btn-primary" style="margin-top:auto;">Get Monthly VIP</a></div>
+        <div class="plan"><div class="pname">Weekly VIP Pass</div><div class="pprice">Rp 15.000</div>
+          <ul><li>Everything in Free</li><li>Turbo 500 speed</li><li>Carrier teleport strike</li></ul>
+          <a href="#get" class="btn btn-ghost" style="margin-top:auto;">Get Weekly VIP</a></div>
+      </div>
+    </section>
+
+    <section id="get" class="wrap">
+      <div class="band">
+        <h2>Ready to run Zirtz?</h2>
+        <p>Sign in with Discord or Google, grab your key, paste the loader. Farming in under a minute.</p>
+      </div>
+    </section>
+
+    <footer class="wrap"><div class="foot">
+      <a href="#" class="brand">Zirtz.xyz</a>
+      <div class="links">
+        <a href="#features">Features</a><a href="#pricing">Pricing</a>
+      </div>
+      <div class="cr">© 2026 Zirtz.xyz</div>
+    </div></footer>
+  </div>
+
+  <script>
+    function handleLogin(event) {
+      event.preventDefault();
+      var user = document.getElementById('usernameInput').value;
+      var pass = document.getElementById('passwordInput').value;
+      var err = document.getElementById('errorMsg');
+
+      if (user === 'ALDIGANTENG' && pass === 'GGZIRTZ') {
+        document.getElementById('login-section').style.display = 'none';
+        document.getElementById('dashboard-section').style.display = 'block';
+        window.scrollTo(0, 0);
+      } else {
+        err.style.display = 'block';
+      }
+    }
+
+    function handleLogout() {
+      document.getElementById('dashboard-section').style.display = 'none';
+      document.getElementById('login-section').style.display = 'flex';
+      document.getElementById('errorMsg').style.display = 'none';
+      document.getElementById('usernameInput').value = 'ALDIGANTENG';
+      document.getElementById('passwordInput').value = 'GGZIRTZ';
+    }
+
+    function copyLoader(btn){
+      var t = document.getElementById('loaderCode').textContent;
+      navigator.clipboard.writeText(t).then(function(){
+        var o = btn.textContent;
+        btn.textContent = 'Copied';
+        setTimeout(function(){ btn.textContent = o; }, 1400);
+      });
+    }
+  </script>
+</body>
+</html>
